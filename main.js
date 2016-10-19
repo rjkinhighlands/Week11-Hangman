@@ -9,67 +9,104 @@ var choice;
 
 exports.letter;
 exports.songGuess;
+exports.gameOver = false;
+exports.lives = 0;
 exports.chosenSong = game.chooseSong();
 
-// USER INPUT //
+letter.initDisplay();
+letter.displaySong();
+
+// USER INPUT  GUESS LETTER or WORD //
 
 exports.requestInfo = function(){
+	if(exports.lives >= 10){
+		console.log("Busted, down on Buorbon Street. Retry?");
+		playAgain();
+
+	}
 	var questions = [
 	{
 		type: "input",
 		name: "songDo",
 		message: "What is your quess? 'letter' or 'song'?"
+		choices: [
+		"letter"
+		"song"
+		]
 	}
 ];
 
-	inquirer.prompt(questions).then(function(answers){
-		
-		var answer = JSON.Stringify(answers.songDo);
-		console.log(answers);
+inquirer.prompt(questions).then(function(answers){
 
-		if(answer == "letter"){
-			guess("letter");
-		}
-		else if(answers == "song"){
-			console.log("You've chosen a song");
-		}
-		else{
-			console.log("Busted, down on Buorbon Street. Retry?");
+// GUESS LETTERS //
+			
+	if(answer.songDo = "letter"){
+	var letterQ = [
+	{
+		type: "input",
+		name: "song",
+		message: "What song have you chosen?"
+	}
+	];
+
+	inquirer.prompt(questions).then(function(answers){
+		exports.letter = answer.letter;
+		song.checker();
+	})
+}
+
+// GUESS SONG //
+
+else if(answers.songDo == "song"){
+	var songQ = [
+	{
+		type: "input",
+		name: "song",
+		message: "What song have you chosen?"
+	}
+	];
+	inquirer.prompt(songQ).then(function(answers){
+		exports.songGuess = answers.song;
+		song.songChecker();		
+	})
+}
+	else{
+		console.log("WRONG");
 			exports.requestInfo();
 		}
 	})
 };
+		
+// GAME RESET //
 
-// USER INPUT FOR GUESS //
+exports.playAgain = function(){
+	var questions = [
+	{		
+		type: "list",
+		name: "playAgain",
+		message: "Go again?",
+		choices:[
+		"yes",
+		"no"
+		]
+	}
+];
 
-exports.guess = function(type){
-	if(type == "letter"){
-		var questions = [
-		{
-			type: "input",
-			name: "song",
-			message: "What song have you chosen?"
+	inquirer.prompt(questions).then(function(answers){
+		if(answer.playAgain == "yes"){
+			exports.lives = 0;
+			exportschosenSong = game.chooseSong();
+			letter.guessArr = [];
+			letter.wordArr = [];
+			letter.initDisplay();
+			letter.displaySong();
+			exports.requestInfo();
 		}
-	];
-
-		inquirer.prompt(questions).then(function(answers){
-			songGuess = answers.song;
-			song.checker();		
+		else{
+			console.log();
+		}
 	})
 }
-	else{
-		var questions = [{
-			type: "input",
-			name: "song",
-			message: "What song have you chosen?"
-		}];
-
-		inquirer.prompt(questions).then(function(answers){
-			songGuess = answers.song;
-			song.checker();		
-		})
-	}
-};
 
 exports.requestInfo();
 
