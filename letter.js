@@ -1,35 +1,25 @@
-var main = require('./main.js');
-exports.guessedArr = [];
-var guessedDisplay = "";
-exports.songArr = [];
+var Letter = function(ltr) {
 
-// ARRAY //
+// STORE LETTER //
 
-exports.showDisplay = function(){
-	var songChoice = main.chosenSong;
-	for (var i = 0; i<songChoice.length; i++){
-		exports.songArr.push(songChoice.charAt(i));
-		if(songChoice.charAt(i) == '\xa0'){
-			exports.guessedArr.push('\xa0');
-		}
-		else{
-		exports.guessedArr.push('_');
-		}
-	};
-}
+  this.letter = ltr;
 
-// GUESS DISPLAY //
+// SHOW LETTER //
 
-exports.displaySong = function(){
-	guessedDisplay = "";
-	for(var i = 0; i <exports.guessedArr.length; i++){
-		guessedDisplay += exports.guessedArr[i]+" ";
-	}
-	console.log(guessedDisplay);
+  this.appear = false;
+
+  this.letterRender = function() {
+    if(this.letter == ' '){ 
+      this.appear = true;
+      return '  ';
+    }if(this.appear === false){ 
+      return ' _ ';
+    } else{ 
+      return this.letter;
+    }
+  };
 };
 
-// CORRECT GUESSES //
+ // EXPORT //
 
-exports.editArray = function(position, letter){
-	exports.guessedArray[position] = letter;
-};
+module.exports = Letter;

@@ -4,7 +4,8 @@
   "description": "Hangman game will run entirely with Node.js.",
   "main": "main.js",
   "dependencies": {
-    "inquirer": "^1.2.2"
+    "inquirer": "^1.2.1",
+    "is-letter": "^1.1.1"
   },
   "devDependencies": {},
   "scripts": {
@@ -17,7 +18,7 @@
   "author": "RJ Kelly",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/rjkinhighlands/Week11-Hangman/issues"
+     "url": "https://github.com/rjkinhighlands/Week11-Hangman/issues"
   },
   "homepage": "https://github.com/rjkinhighlands/Week11-Hangman#readme"
 }

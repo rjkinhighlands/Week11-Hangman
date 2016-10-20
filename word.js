@@ -1,52 +1,62 @@
-// REQUIRES GAME //
+// REQUIRE LETTER.JS //
 
-var main = require("./main.js");
-var letter = require("./letter.js");
-exports.letterArr = [];
+var Letter = require('./letter.js');
 
-// VARIABLE for chosenSong //
+function Song(sng) {
+  var that = this;
 
-exports.checker = function(){
-	var songToCheck = main.chosenSong;
-	exports.letterArr.push(main.letter);
-	var detected = 0;
-	for(var i = 0; i < songToCheck.length; i++){
-		if(songToCheck.charAt(i) == main.letter){
-		letter.editArray(i, main.letter);
-		detected++;
-		}
-	}
-	letter.displaySong();
-	if(detected == 0){
-		main.lives++;
-	}
-	main.requestInfo();
-};
+  this.song = sng;
+  this.letters = [];
+  this.songFound = false;
 
-// CORRECT? //
+  this.getLets = function() {
 
-exports.songGuess = function(){
-	var guess = main.songGuess;
-	var song = main.chosenSong;
-	var isNotEqualto;
+// NEW LETTERS //
 
-// CHECK GUESSES //
+    for(var i = 0; i<that.song.length; i++){
+      var newLetter = new Letter(that.song[i]);
+      this.letters.push(newLetter);
+    }
+  };
 
-	for(var d = 0; d<song.length; g++){
-		if(guess[d] !=song[d]){
-			isNotEqualto = false;
-	}
-	else{
-		isNotEqualto = true
-	}
-	}
-	if(isNotEqualto == true){
-		console.log("Groovy, you got it");
-		main.playAgain();
-	}
-	else{
-		console.log("Bummer, wrong");
-		main.lives++;
-		main.requestInfo();
-	}
-};
+// CURRENT WORD //
+
+  this.didWeFindTheSong = function() {
+    if(this.letters.every(function(lttr){
+      return lttr.appear === true;
+    })){
+      this.songFound = true;
+      return true;
+    }
+
+  };
+
+  this.checkIfLetterFound = function(guessedLetter) {
+    var whatToReturn = 0;
+
+// MATCH GUESSES //
+
+    this.letters.forEach(function(lttr){
+      if(lttr.letter === guessedLetter){
+        lttr.appear = true;
+        whatToReturn++;
+      }
+    })
+ // CORRECT GUESS //
+
+    return whatToReturn;
+  };
+
+  this.songRender = function() {
+    var display = '';
+
+    that.letters.forEach(function(lttr){
+      var currentLetter = lttr.letterRender();
+      display+= currentLetter;
+    });
+
+    return display;
+  };
+}
+
+module.exports = Song;
