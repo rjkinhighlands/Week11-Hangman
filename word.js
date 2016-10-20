@@ -2,11 +2,13 @@
 
 var main = require("./main.js");
 var letter = require("./letter.js");
+exports.letterArr = [];
 
 // VARIABLE for chosenSong //
 
 exports.checker = function(){
 	var songToCheck = main.chosenSong;
+	exports.letterArr.push(main.letter);
 	var detected = 0;
 	for(var i = 0; i < songToCheck.length; i++){
 		if(songToCheck.charAt(i) == main.letter){
@@ -18,12 +20,7 @@ exports.checker = function(){
 	if(detected == 0){
 		main.lives++;
 	}
-	if(main.gameOver == false){
-		main.requestInfo();
-	}
-	else if(main.gameOver  == true){
-		console.log("GAME OVER");
-	}
+	main.requestInfo();
 };
 
 // CORRECT? //
@@ -35,8 +32,8 @@ exports.songGuess = function(){
 
 // CHECK GUESSES //
 
-	for(var g = 0; g<song.length; g++){
-		if(guess[g] !=song[g]){
+	for(var d = 0; d<song.length; g++){
+		if(guess[d] !=song[d]){
 			isNotEqualto = false;
 	}
 	else{

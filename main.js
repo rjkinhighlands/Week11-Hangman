@@ -4,32 +4,36 @@ var game = require('./game.js');
 var word = require ('./word.js');
 var letter = require ('./letter.js');
 var inquirer = require ('inquirer');
-var choices = "";
+var choice;
 
 // VARIABLES //
 
 exports.letter;
 exports.songGuess;
-exports.gameOver = false;
+//exports.gameOver = false;
 exports.lives = 0;
 exports.chosenSong = game.chooseSong();
 
-letter.showDisplay();
-letter.displaySong();
+//letter.showDisplay();
+//letter.displaySong();
 
 // USER INPUT  GUESS LETTER or WORD //
 
 exports.requestInfo = function(){
 	if(exports.lives >= 15){
-		console.log("Busted, down on Buorbon Street. Retry?");
-		playAgain();
+		console.log("Busted, down on Buorbon Street. Retry?")
+		exports.playAgain();
 	}
+	else{
 	var questions = [
 	{
-		type: "input",
+		type: "list",
 		name: "songDo",
-		message: "What is your quess? 'letter' or 'song'?"
-		//choices: "letter" "song"]
+		message: "What is your quess?\n You've burned "+exports.lives+" out of 15. Be COOL.",
+		choices:[
+		"letter", 
+		"song"
+		]
 	}
 ];
 
@@ -41,8 +45,8 @@ exports.requestInfo = function(){
 	var letterG = [
 	{
 		type: "input",
-		name: "song",
-		message: "What song have you chosen?"
+		name: "letter",
+		message: "Thats already taken: "+song.letterArr+"\nNumber guessed: "
 	}
 ];
 
@@ -59,7 +63,7 @@ exports.requestInfo = function(){
 	{
 		type: "input",
 		name: "song",
-		message: "What song have you chosen?"
+		message: "What is this song?"
 	}
 ];
 	inquirer.prompt(songG).then(function(answers){
@@ -72,6 +76,7 @@ exports.requestInfo = function(){
 			exports.requestInfo();
 		}
 	})
+	}
 };
 		
 // GAME RESET //
@@ -92,9 +97,10 @@ exports.playAgain = function(){
 	inquirer.prompt(questions).then(function(answers){
 		if(answer.playAgain == "yes"){
 			exports.lives = 0;
-			exportschosenSong = game.chooseSong();
-			letter.guessArr = [];
-			letter.wordArr = [];
+			exports.chosenSong = game.chooseSong();
+			letter.guessedArr = [];
+			letter.songArr = [];
+			song.letterArr = [];
 			letter.initDisplay();
 			letter.displaySong();
 			exports.requestInfo();
@@ -102,7 +108,7 @@ exports.playAgain = function(){
 		else{
 			console.log("Keep on Truckin'");
 		}
-	})
+	});
 }
 
-exports.requestInfo();
+//exports.requestInfo();
