@@ -7,4 +7,3 @@ exports.chooseSong = function(){
 	var randNum = Math.floor((Math.random()*songs.length)+1);
 	return songs[randNum];
 }
-

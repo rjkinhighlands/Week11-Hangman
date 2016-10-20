@@ -1,24 +1,55 @@
-// REQUIRES GAME.JS  //
+// REQUIRES GAME //
 
 var main = require("./main.js");
+var letter = require("./letter.js");
 
 // VARIABLE for chosenSong //
 
-var songToCheck = main.chosenSong;
-	console.log("Song to verify is "+songToCheck);
-	console.log("Letter: "+main.letter);
-	console.log("Song quessed: "+main.songGuess);
-
-// LETTER CHECK //
-
 exports.checker = function(){
+	var songToCheck = main.chosenSong;
+	var detected = 0;
 	for(var i = 0; i < songToCheck.length; i++){
-		console.log(songToCheck.charAt(i));
 		if(songToCheck.charAt(i) == main.letter){
-			console.log("I'm your Uncle Sam thats who I am")
+		letter.editArray(i, main.letter);
+		detected++;
 		}
-		else{
-			console.log("Concerts Over");
-		}	
-	}	
+	}
+	letter.displaySong();
+	if(detected == 0){
+		main.lives++;
+	}
+	if(main.gameOver == false){
+		main.requestInfo();
+	}
+	else if(main.gameOver  == true){
+		console.log("GAME OVER");
+	}
+};
+
+// CORRECT? //
+
+exports.songGuess = function(){
+	var guess = main.songGuess;
+	var song = main.chosenSong;
+	var isNotEqualto;
+
+// CHECK GUESSES //
+
+	for(var g = 0; g<song.length; g++){
+		if(guess[g] !=song[g]){
+			isNotEqualto = false;
+	}
+	else{
+		isNotEqualto = true
+	}
+	}
+	if(isNotEqualto == true){
+		console.log("Groovy, you got it");
+		main.playAgain();
+	}
+	else{
+		console.log("Bummer, wrong");
+		main.lives++;
+		main.requestInfo();
+	}
 };
