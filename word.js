@@ -9,7 +9,7 @@ function Song(sng) {
   this.letters = [];
   this.songFound = false;
 
-  this.getLets = function() {
+  this.getSong = function() {
 
 // NEW LETTERS //
 
@@ -21,7 +21,7 @@ function Song(sng) {
 
 // CURRENT WORD //
 
-  this.didWeFindTheSong = function() {
+  this.findTheSong = function() {
     if(this.letters.every(function(lttr){
       return lttr.appear === true;
     })){
@@ -32,19 +32,19 @@ function Song(sng) {
   };
 
   this.checkIfLetterFound = function(guessedLetter) {
-    var whatToReturn = 0;
+    var whatToDisplay = 0;
 
 // MATCH GUESSES //
 
     this.letters.forEach(function(lttr){
       if(lttr.letter === guessedLetter){
         lttr.appear = true;
-        whatToReturn++;
+        whatToDisplay++;
       }
     })
  // CORRECT GUESS //
 
-    return whatToReturn;
+    return whatToDisplay;
   };
 
   this.songRender = function() {
