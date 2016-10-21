@@ -3,7 +3,7 @@
 var word = require('./word.js');
 var game = require('./game.js');
 var inquirer = require('inquirer');
-var isLetter = require('is-letter');
+var letter = require('./letter');
 
 // HANGMAN //
 
@@ -76,7 +76,7 @@ var hangman = {
       type: "input",
       message: "Choose a letter:",
       validate: function(value) {
-        if(isLetter(value)){
+        if(letter(value)){
           return true;
         } else{
           return false;
